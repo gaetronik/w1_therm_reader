@@ -1,8 +1,14 @@
 [package]
 name = "w1_therm_reader"
+description = "A simple parser for w1_therm file on linux"
 version = "0.1.0"
 authors = ["Gaëtan Duchaussois <gaetan-github@pignouf.fr>"]
 edition = "2018"
+repository = "https://github.com/gaetronik/w1_therm_reader"
+readme = "Readme.md"
+keywords = ["onewire","1w", "1wire", "sensor", "temperature"]
+categories = ["hardware-support","parser-implementations","os"]
+license = "WTFPL"
 
 [dependencies]
 nom = "5"
