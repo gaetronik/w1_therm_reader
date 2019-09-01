@@ -1,0 +1,8 @@
+[package]
+name = "w1_therm_reader"
+version = "0.1.0"
+authors = ["Gaëtan Duchaussois <gaetan-github@pignouf.fr>"]
+edition = "2018"
+
+[dependencies]
+nom = "5"
