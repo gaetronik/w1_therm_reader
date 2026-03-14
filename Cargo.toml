@@ -11,4 +11,4 @@ categories = ["hardware-support","parser-implementations","os"]
 license = "WTFPL"
 
 [dependencies]
-nom = "5"
+nom = "8"
