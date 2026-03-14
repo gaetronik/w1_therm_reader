@@ -1,8 +1,8 @@
 use crate::ResultW1;
 use nom::{
     bytes::complete::tag, character::complete::alphanumeric1, character::complete::hex_digit1,
-    character::complete::newline, character::complete::not_line_ending,
-    multi::separated_nonempty_list, sequence::preceded, sequence::tuple, IResult,
+    character::complete::newline, character::complete::not_line_ending, multi::separated_list1,
+    sequence::preceded, IResult, Parser,
 };
 
 fn parser_hex(input: &str) -> IResult<&str, &str> {
@@ -10,23 +10,20 @@ fn parser_hex(input: &str) -> IResult<&str, &str> {
 }
 
 fn parser_array_hex(input: &str) -> IResult<&str, Vec<&str>> {
-    separated_nonempty_list(tag(" "), parser_hex)(input)
+    separated_list1(tag(" "), parser_hex).parse(input)
 }
 
 fn parser_end_first_line(input: &str) -> IResult<&str, Vec<&str>> {
-    preceded(
-        tag(" : crc="),
-        separated_nonempty_list(tag(" "), alphanumeric1),
-    )(input)
+    preceded(tag(" : crc="), separated_list1(tag(" "), alphanumeric1)).parse(input)
 }
 
 fn parser_temp(input: &str) -> IResult<&str, i32> {
-    let (input, (_, temp)) = tuple((tag(" t="), not_line_ending))(input)?;
+    let (input, (_, temp)) = (tag(" t="), not_line_ending).parse(input)?;
     Ok((input, temp.parse().unwrap()))
 }
 
 fn parser_second_line<'a>(input: &'a str, raw_value: &str) -> IResult<&'a str, i32> {
-    let (input, (_, _, temp)) = tuple((newline, tag(raw_value), parser_temp))(input)?;
+    let (input, (_, _, temp)) = (newline, tag(raw_value), parser_temp).parse(input)?;
     Ok((input, temp))
 }
 
