@@ -38,7 +38,6 @@ pub fn parser(input: &str) -> IResult<&str, ResultW1> {
         ResultW1 {
             crc: crc_value == "YES",
             temp,
-            raw_value,
         },
     ))
 }

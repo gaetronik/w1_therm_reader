@@ -14,7 +14,6 @@ use std::io::{Error, ErrorKind, Result};
 pub struct ResultW1 {
     pub crc: bool,
     pub temp: i32,
-    raw_value: String,
 }
 
 fn validate_w1(result: ResultW1) -> Result<i32> {
@@ -34,7 +33,6 @@ fn handle_nom_error() -> Result<i32> {
 /// ```
 /// assert_eq!(w1_therm_reader::convert_to_metric(-22344),-22.344)
 /// ```
-
 pub fn convert_to_metric(read_temp: i32) -> f32 {
     (read_temp as f32) / 1000.00
 }
@@ -89,5 +87,4 @@ mod tests {
     fn test_read_nonexistent_error() {
         assert!(read_from_file("assets/not_here.txt").is_err());
     }
-
 }
